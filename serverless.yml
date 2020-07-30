@@ -1,0 +1,9 @@
+service: app-todo-backend
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+functions:
+  tasks:
+    handler: handler.tasks
