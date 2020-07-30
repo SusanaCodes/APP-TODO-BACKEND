@@ -3,7 +3,13 @@ service: app-todo-backend
 provider:
   name: aws
   runtime: nodejs12.x
+  region: eu-west-1
 
 functions:
   tasks:
-    handler: handler.tasks
+    handler: handler.app
+    events:
+      - http:
+          path: /tasks
+          method: get
+          cors: true
