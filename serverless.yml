@@ -8,7 +8,7 @@ provider:
 functions:
   tasks:
     handler: handler.app
-    enviroment:
+    environment:
       DB_HOST: ${opt:DB_HOST}
       DB_USER: ${opt:DB_USER}
       DB_PASSWORD: ${opt:DB_PASSWORD}
