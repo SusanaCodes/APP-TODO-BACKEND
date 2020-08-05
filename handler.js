@@ -28,7 +28,15 @@ app.get("/tasks", function (request, response) {
 
 app.delete("/tasks/:id", function (request, response) {
   const id = request.params.id;
-  response.status(200).send(`Your task ${id} has now been deleted!`);
+  const query = "DELETE FROM Tasks WHERE TaskId = ?";
+  connection.query(query, [id], (err) => {
+    if (err) {
+      console.log("Error from MySql", err);
+      response.status(500).send(err);
+    } else {
+      response.status(200).send("Task deleted!");
+    }
+  });
 });
 
 app.post("/tasks", function (request, response) {
@@ -61,11 +69,15 @@ app.post("/tasks", function (request, response) {
 app.put("/tasks/:id", function (request, response) {
   const id = request.params.id;
   const data = request.body;
-  response
-    .status(200)
-    .send(
-      `Your task ${id} and data ${JSON.stringify(data)} has now been amended!`
-    );
+  const query = "UPDATE Tasks SET Completed = ? WHERE TaskId = ?";
+  connection.query(query, [data.Completed, id], (err) => {
+    if (err) {
+      console.log("MySql error", err);
+      response.status(500).send(err);
+    } else {
+      response.status(200).send("Task updated!");
+    }
+  });
 });
 
 module.exports.app = serverlessHttp(app);
